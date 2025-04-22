@@ -1,89 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Propose</title>
-    <!-- Adding Favicon -->
-    <link rel="shortcut icon" type="image/jpg" href="heart.png"/>
-
-    <!-- Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
-
+    <title>A Heartfelt Proposal</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="heart.png"/>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Dancing Script and Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="position-absolute top-50 start-50 translate-middle">
-        <div id="parentElement">
+<body class="min-h-screen bg-gradient-to-br from-pink-200 via-purple-200 to-indigo-200 flex flex-col items-center justify-center relative overflow-hidden">
+    <!-- Heart Particles Canvas -->
+    <canvas id="heartParticles" class="absolute inset-0 pointer-events-none"></canvas>
 
-            <div class="d-flex justify-content-center">
-                <lottie-player src="https://assets10.lottiefiles.com/private_files/lf30_mywfoph1.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
-            </div>
-                <h1>Will you be my GF🥰?</h1>
-                <div class="d-flex justify-content-center">
-                <button onclick="propose()" class="btn btn-primary">Yes!</button> <br>
-                <button onclick="propose()" class="btn btn-primary">Of Course, Yes!</button>
-            </div>
+    <!-- Main Proposal Section -->
+    <div id="parentElement" class="text-center transform transition-all duration-500">
+        <!-- Lottie Animation -->
+        <div class="flex justify-center mb-6">
+            <lottie-player src="https://assets10.lottiefiles.com/private_files/lf30_mywfoph1.json" background="transparent" speed="1" class="w-64 h-64 md:w-80 md:h-80 animate-bounce-slow" loop autoplay></lottie-player>
         </div>
-        <div class="position-absolute top-50 start-50 translate-middle" id="showMessage">
-            <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_utsfwa3k.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player>
-            <h1 class="ml6" >
-                <span class="text-wrapper">
-                    <span class="letters">I Love you!</span>
-                </span>
-            </h1>
+        <!-- Proposal Text -->
+        <h1 class="text-4xl md:text-6xl text-white font-dancing-script font-bold mb-8 drop-shadow-lg">
+            Will you be my forever love? 🥰
+        </h1>
+        <!-- Buttons -->
+        <div class="flex flex-col md:flex-row justify-center gap-4 relative">
+            <button onclick="propose()" class="bg-white text-pink-600 font-poppins font-semibold py-3 px-6 rounded-full shadow-lg hover:bg-pink-100 hover:scale-105 hover:shadow-pink-300 transition-all duration-300 flex items-center gap-2">
+                Yes! <span class="text-pink-400">💖</span>
+            </button>
+            <button onclick="propose()" class="bg-white text-pink-600 font-poppins font-semibold py-3 px-6 rounded-full shadow-lg hover:bg-pink-100 hover:scale-105 hover:shadow-pink-300 transition-all duration-300 flex items-center gap-2">
+                Absolutely, Yes! <span class="text-pink-400">🌸</span>
+            </button>
+            <button id="noButton" onmouseover="moveNoButton()" class="absolute md:static bg-white text-gray-600 font-poppins font-semibold py-3 px-6 rounded-full shadow-lg hover:bg-gray-100 hover:scale-105 hover:shadow-gray-300 transition-all duration-300 flex items-center gap-2">
+                No, maybe? <span class="text-gray-400">😅</span>
+            </button>
         </div>
     </div>
-    
 
-    <!-- LottieFiles CDN -->
+    <!-- Response Section -->
+    <div id="showMessage" class="hidden text-center transform transition-all duration-500">
+        <!-- Lottie Animation -->
+        <div class="flex justify-center mb-6">
+            <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_utsfwa3k.json" background="transparent" speed="1" class="w-64 h-64 md:w-80 md:h-80 animate-bounce-slow" loop autoplay></lottie-player>
+        </div>
+        <!-- Response Text -->
+        <h1 class="ml6 text-3xl md:text-5xl text-white font-dancing-script font-bold drop-shadow-lg">
+            <span class="text-wrapper">
+                <span class="letters">You make my heart soar! I love you! 💖</span>
+            </span>
+        </h1>
+    </div>
+
+    <!-- Footer -->
+    <footer class="absolute bottom-4 text-white font-poppins text-sm">
+        Made with 💖 for you | <a href="#" class="underline hover:text-pink-300">Our Story</a>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Lottie Player -->
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-
-    <!-- Bootstrap JS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-
-    <!-- Anim JS CDN -->
+    <!-- Anime.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-
+    <!-- Confetti.js -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <!-- Custom JavaScript -->
-<script>
-const parentElement = document.getElementById("parentElement");
-const showMassage = document.getElementById("showMassage");
-const changeColor = document.body.style;
+    <script>
+        const parentElement = document.getElementById("parentElement");
+        const showMessage = document.getElementById("showMessage");
+        const noButton = document.getElementById("noButton");
 
-propose = () => {
-  parentElement.style.display = "none";
-  showMessage.style.display = "block";
-  changeColor.background =
-    "linear-gradient(116.82deg, #ff94e7 0%, #27cbff 100%)";
-};
+        function propose() {
+            parentElement.classList.add("hidden");
+            showMessage.classList.remove("hidden");
+            document.body.style.background = "linear-gradient(116.82deg, #ff94e7 0%, #27cbff 100%)";
 
-// Animate Text with Anim JS
-var textWrapper = document.querySelector(".ml6 .letters");
-textWrapper.innerHTML = textWrapper.textContent.replace(
-  /\S/g,
-  "<span class='letter'>$&</span>"
-);
+            // Trigger confetti
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff94e7', '#27cbff', '#ffffff']
+            });
+        }
 
-anime 
-  .timeline({ loop: true })
-  .add({
-    targets: ".ml6 .letter",
-    translateY: ["1.1em", 0],
-    translateZ: 0,
-    duration: 750,
-    delay: (el, i) => 50 * i,
-  })
-  .add({
-    targets: ".ml6",
-    opacity: 0,
-    duration: 1000,
-    easing: "easeOutExpo",
-    delay: 1000,
-  });
-</script>
+        function moveNoButton() {
+            // Get viewport dimensions
+            const maxX = window.innerWidth - noButton.offsetWidth - 20; // Ensure button stays within viewport
+            const maxY = window.innerHeight - noButton.offsetHeight - 20;
+            
+            // Generate random positions
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+
+            // Apply new position and shake animation
+            noButton.style.position = "absolute";
+            noButton.style.left = `${newX}px`;
+            noButton.style.top = `${newY}px`;
+            noButton.classList.add("animate-shake");
+            setTimeout(() => noButton.classList.remove("animate-shake"), 500); // Remove shake after 0.5s
+        }
+
+        // Animate Text
+        var textWrapper = document.querySelector(".ml6 .letters");
+        textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+        anime.timeline({ loop: true })
+            .add({
+                targets: ".ml6 .letter",
+                translateY: ["1.1em", 0],
+                translateZ: 0,
+                duration: 750,
+                delay: (el, i) => 50 * i,
+            })
+            .add({
+                targets: ".ml6",
+                opacity: 0,
+                duration: 1000,
+                easing: "easeOutExpo",
+                delay: 1000,
+            });
+
+        // Heart Particles
+        const canvas = document.getElementById("heartParticles");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 10 + 5;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.2) this.size -= 0.1;
+            }
+            draw() {
+                ctx.fillStyle = "rgba(255, 182, 193, 0.5)";
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.quadraticCurveTo(this.x + this.size, this.y - this.size, this.x + this.size * 2, this.y);
+                ctx.quadraticCurveTo(this.x + this.size, this.y + this.size, this.x, this.y + this.size * 2);
+                ctx.quadraticCurveTo(this.x - this.size, this.y + this.size, this.x - this.size * 2, this.y);
+                ctx.quadraticCurveTo(this.x - this.size, this.y - this.size, this.x, this.y);
+                ctx.fill();
+            }
+        }
+
+        function handleParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].size <= 0.2) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (Math.random() < 0.1) particles.push(new Particle());
+            handleParticles();
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        // Optional Background Music (commented out)
+        /*
+        const bgMusic = new Audio('path-to-romantic-music.mp3');
+        bgMusic.loop = true;
+        bgMusic.volume = 0.3;
+        bgMusic.play();
+        */
+    </script>
+    <!-- Inline Tailwind Configuration for Custom Animations -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'shake': 'shake 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '25%': { transform: 'translateX(-10px)' },
+                            '50%': { transform: 'translateX(10px)' },
+                            '75%': { transform: 'translateX(-10px)' },
+                        },
+                    },
+                },
+            },
+        };
+    </script>
 </body>
 </html>
