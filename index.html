@@ -27,15 +27,19 @@
         </h1>
         <!-- Buttons -->
         <div class="flex flex-col md:flex-row justify-center gap-4 relative">
-            <button onclick="propose()" class="bg-white text-pink-600 font-poppins font-semibold py-3 px-6 rounded-full shadow-lg hover:bg-pink-100 hover:scale-105 hover:shadow-pink-300 transition-all duration-300 flex items-center gap-2">
+            <button onclick="propose()" class="bg-white text-pink-600 font-poppins font-semibold py-3 px-6 rounded-full shadow-lg hover:bg-pink-100 hover:scale-105 hover:shadow-pink-300 transition-all duration-300 flex items-center gap-2 z-10">
                 Yes! <span class="text-pink-400">💖</span>
             </button>
-            <button onclick="propose()" class="bg-white text-pink-600 font-poppins font-semibold py-3 px-6 rounded-full shadow-lg hover:bg-pink-100 hover:scale-105 hover:shadow-pink-300 transition-all duration-300 flex items-center gap-2">
+            <button onclick="propose()" class="bg-white text-pink-600 font-poppins font-semibold py-3 px-6 rounded-full shadow-lg hover:bg-pink-100 hover:scale-105 hover:shadow-pink-300 transition-all duration-300 flex items-center gap-2 z-10">
                 Absolutely, Yes! <span class="text-pink-400">🌸</span>
             </button>
-            <button id="noButton" onmouseover="moveNoButton()" class="absolute md:static bg-white text-gray-600 font-poppins font-semibold py-3 px-6 rounded-full shadow-lg hover:bg-gray-100 hover:scale-105 hover:shadow-gray-300 transition-all duration-300 flex items-center gap-2">
+            <button id="noButton" onclick="moveNoButton()" class="absolute md:static bg-white text-gray-600 font-poppins font-semibold py-3 px-6 rounded-full shadow-lg hover:bg-gray-100 hover:scale-105 hover:shadow-gray-300 transition-all duration-300 flex items-center gap-2 z-10">
                 No, maybe? <span class="text-gray-400">😅</span>
             </button>
+        </div>
+        <!-- Playful Message for No Button -->
+        <div id="noMessage" class="hidden text-white font-poppins text-lg mt-4 transition-opacity duration-500">
+            Are you sure? 🥺
         </div>
     </div>
 
@@ -54,7 +58,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="absolute bottom-4 text-white font-poppins text-sm">
+    <footer class="absolute bottom-4 text-white font-poppins text-sm z-10">
         Made with 💖 for you | <a href="#" class="underline hover:text-pink-300">Our Story</a>
     </footer>
 
@@ -70,6 +74,9 @@
         const parentElement = document.getElementById("parentElement");
         const showMessage = document.getElementById("showMessage");
         const noButton = document.getElementById("noButton");
+        const noMessage = document.getElementById("noMessage");
+        let noButtonMoves = 0;
+        const maxMoves = 5; // Limit the number of moves
 
         function propose() {
             parentElement.classList.add("hidden");
@@ -86,20 +93,37 @@
         }
 
         function moveNoButton() {
+            if (noButtonMoves >= maxMoves) {
+                // Allow clicking after max moves
+                noButton.onclick = () => {
+                    noMessage.innerText = "Aww, okay... but my heart hopes! 💔";
+                    noMessage.classList.remove("hidden");
+                };
+                return;
+            }
+
             // Get viewport dimensions
-            const maxX = window.innerWidth - noButton.offsetWidth - 20; // Ensure button stays within viewport
-            const maxY = window.innerHeight - noButton.offsetHeight - 20;
-            
-            // Generate random positions
-            const newX = Math.random() * maxX;
-            const newY = Math.random() * maxY;
+            const buttonWidth = noButton.offsetWidth;
+            const buttonHeight = noButton.offsetHeight;
+            const maxX = window.innerWidth - buttonWidth - 20; // Ensure button stays within viewport
+            const maxY = window.innerHeight - buttonHeight - 20;
+
+            // Ensure positive coordinates and keep button visible
+            const newX = Math.max(20, Math.min(maxX, Math.random() * maxX));
+            const newY = Math.max(20, Math.min(maxY, Math.random() * maxY));
 
             // Apply new position and shake animation
             noButton.style.position = "absolute";
             noButton.style.left = `${newX}px`;
             noButton.style.top = `${newY}px`;
             noButton.classList.add("animate-shake");
-            setTimeout(() => noButton.classList.remove("animate-shake"), 500); // Remove shake after 0.5s
+            setTimeout(() => noButton.classList.remove("animate-shake"), 500);
+
+            // Show playful message
+            noMessage.classList.remove("hidden");
+            setTimeout(() => noMessage.classList.add("hidden"), 2000);
+
+            noButtonMoves++;
         }
 
         // Animate Text
